@@ -18,7 +18,7 @@
         transform: rotateX(-330deg) rotateY(360deg);
 
         display: grid;
-        grid-template: 2fr 5fr 2fr / 2fr 5fr 2fr;
+        grid-template: 1fr 5fr 1fr / 1fr 5fr 1fr;
 
 
         .middle {
@@ -65,17 +65,18 @@
 
                 p {
 
-
                     width: 100%;
                     word-wrap: break-word;
                     text-align: center;
                     color: #fff;
                     font-weight: 500;
                     height: 25%;
-                    background: red;
+
 
                 }
             }
+
+
         }
     }
 }

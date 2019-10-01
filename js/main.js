@@ -8,11 +8,21 @@ class Plateau {
     createPlateCase() {
         for (let side of Object.keys(this.cases)) {
             let ruesContainer = document.querySelector(".case-rue-" + side);
+            let color = this.cases[side].color;
             for (let rue of Object.keys(this.cases[side])) {
+                if (rue == "color") {
+                    continue;
+                }
                 let card = document.createElement("div");
                 let cardName = document.createElement("p");
+                cardName.style.background = color
                 cardName.innerText = rue;
+
+                let cardPrice = document.createElement("span");
+                cardPrice.innerText = "Prix: " +this.cases[side][rue].prix;
+
                 card.appendChild(cardName);
+                card.appendChild(cardPrice);
                 ruesContainer.appendChild(card);
             }
         }
@@ -22,6 +32,7 @@ class Plateau {
 
 var cases = {
     bottom: {
+        color: "#4ee350",
         Pompidou: {
             prix: 50
         },
@@ -39,6 +50,7 @@ var cases = {
         }
     },
     left: {
+        color: "#e34e4e",
         Pompidou: {
             prix: 50
         },
@@ -56,6 +68,7 @@ var cases = {
         }
     },
     top: {
+        color: "#e3d94e",
         Pompidou: {
             prix: 50
         },
@@ -73,6 +86,7 @@ var cases = {
         }
     },
     right: {
+        color: "#4e54e3",
         Pompidou: {
             prix: 50
         },
