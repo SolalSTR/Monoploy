@@ -1,0 +1,21 @@
+//main: main.scss
+
+.tabs {
+    height: 100%;
+    background: rgb(207, 130, 131);
+    width: 20%;
+
+    @media screen and (max-width: 992px) {
+        position: absolute;
+
+        &-left {
+            left: 0;
+        }
+        &-right {
+            left: 0;
+        }
+    }
+
+
+
+}

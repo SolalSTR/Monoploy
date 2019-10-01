@@ -1,0 +1,25 @@
+html,body {
+    height: 100%;
+    width: 100%;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    font-family: "Montserrat";
+}
+
+$header-size: 100px;
+$color-monopoly: rgb(180, 255, 217);
+$color-monopoly-secondary: rgb(214, 255, 234),;
+
+main {
+    padding-top: $header-size;
+    position: relative;
+    height: 100%;
+    display: flex;
+}
+
+@import "header.scss", "layout.scss", "plateau.scss", "tabs.scss";

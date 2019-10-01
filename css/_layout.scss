@@ -1,0 +1,38 @@
+//main: main.scss
+
+$breakpoints: ("xs":576px, "sm":768px, "md":992px, "lg":1200px,"no":0px);
+@each $points,$px in $breakpoints {
+    @for $i from 1 through 12 {
+        @if $points == "no" {
+            .col-#{$i} {
+                width: 100% / 12 * $i;
+            }
+        }
+        .col-#{$points}-#{$i} {
+            @media screen and (min-width: $px) {
+                width: 100% / 12 * $i;
+            }
+        }
+    }
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-end {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.flex-col {
+    display: flex;
+    flex-direction: column;
+}
