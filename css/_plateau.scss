@@ -16,7 +16,7 @@
     -webkit-perspective: 1000px;
     perspective: 1000px;
 
-    >div {
+    #plateau {
         height: 600px;
         width: 600px;
         background: rgb(180, 255, 217);
@@ -26,7 +26,6 @@
         transform: rotateX(20deg);
 
         display: grid;
-        grid-template: 1fr 5fr 1fr / 1fr 5fr 1fr;
 
 
         .middle {
@@ -48,85 +47,96 @@
             grid-row: 2 / span 1;
         }
 
-        .case {
+        .pion {
+            transition: 1s;
+            position: absolute;
+            height: 50px;
+            width: 20px;
+            opacity: 0.5;
+        }
 
+        .case {
+            font-size: 100%;
             height: 100%;
             width: 100%;
             display: flex;
-            flex: 1 1;
+            flex-direction: column;
             border: solid rgb(44, 50, 44) 1px;
-            >div {
-                border: solid rgb(44, 50, 44) 1px;
-            }
-            font-size: 12px;
+            font-size: 1.5rem;
+            text-align: center;
 
-            &.corner {
-                position: relative;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                i {
-                    font-size: 50px;
-                }
-                p {
-                    text-align: center;
-                }
+            i {
+                align-self: center;
+
+                font-size: 6rem;
             }
 
-            &-rue-bottom {
-                flex-direction: row-reverse;
-            }
-            &-rue-left {
-                flex-direction: column-reverse;
-            }
-            &-rue-right {
-                flex-direction: column;
-            }
-
-            >div {
-                position: relative;
-                height: 100%;
+            p {
                 width: 100%;
+                word-wrap: break-word;
 
-                p {
+                font-weight: 500;
+                padding: 5% 0;
 
-                    width: 100%;
-                    word-wrap: break-word;
-                    text-align: center;
+                &:first-child {
+                    color: #fff;
+                }
+            }
+        }
+    }
 
-                    font-weight: 500;
-                    height: 25%;
+    .popUp {
+        position: absolute;
+        height: 30%;
+        width: 30%;
+        background: #fff;
+        border-radius: 50%;
+        border-bottom: #666666 5px solid;
+        justify-self: center;
+        align-self: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        font-size: 1.2rem;
+        div {
+            height: 40%;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+        }
 
-                    &:first-child {
-                        color: #fff;
-                    }
+        button {
+            outline: none;
+            box-sizing: content-box;
+            border: none;
+            height: 100%;
+            width: 40%;
+            border-radius: 50%;
+            justify-self: center;
+            align-self: center;
+            font-size: 2rem;
+            font-weight: 600;
+
+            &:first-child {
+                background: #7ded45;
+                border-bottom: #4aba12 5px solid;
+
+                &:active {
+                    border-top: #fff 5px solid;
+                    border-bottom: #7eee49 5px solid;
                 }
             }
 
+            &:last-child {
+                background: #ee4848;
+                border-bottom: #ba1212 5px solid;
 
+                &:active {
+                    border-top: #fff 5px solid;
+                    border-bottom: #ee4848 5px solid;
+                }
+            }
         }
     }
-
-    .pionDiv {
-        position: absolute !important;
-        top: 0;
-        left: 0;
-        border: none !important;
-        height: 100%;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        .pion {
-
-            margin: 3px;
-            height: 50px;
-            width: 30px !important;
-            border-radius: 50% 50% 30% 30%;
-            opacity: 0.5;
-            border: red solid 3px !important;
-        }
-    }
-
 }
