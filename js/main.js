@@ -97,6 +97,34 @@ class Plateau {
         this.turnHandeler();
     }
 
+    popUp(title,info,func1,name1) {
+        let popUpElement = document.createElement("div");
+        popUpElement.classList.add("popUp");
+
+        let popUpTitle = document.createElement("p");
+        popUpTitle.innerText = title;
+        popUpElement.appendChild(popUpTitle);
+
+        let popUpInfo = document.createElement("p");
+        popUpInfo.innerText = info;
+        popUpElement.appendChild(popUpInfo);
+
+        let buttonDiv = document.createElement("div");
+
+        popUpElement.appendChild(buttonDiv);
+
+        let confirm = document.createElement("button");
+        confirm.innerText = name1;
+        confirm.onclick = function() {
+            popUpElement.remove();
+            func1()
+        }
+        buttonDiv.appendChild(confirm);
+
+        document.getElementById('plateau').appendChild(popUpElement);
+
+    }
+
     turnHandeler() {
         if (this.playerTurn < 0) {
             this.playerTurn += this.playersName.length;
@@ -106,7 +134,7 @@ class Plateau {
         }
 
         this.counterHandeler();
-        this.players[this.playerTurn].movePion(2);
+        this.players[this.playerTurn].movePion(Math.floor(Math.random() * 4) +1);
         this.playerTurn++;
     }
 
