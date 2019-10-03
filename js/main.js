@@ -54,7 +54,10 @@ class Plateau {
                 let cardLoyer = document.createElement("p");
                 cardLoyer.innerText = "Loyer: " + card.loyer;
                 cardElement.appendChild(cardLoyer);
+            } else {
+                cardElement.classList.add("corner");
             }
+
             let platLength = this.plateauCases.length;
             cardElement.style.order = cardIndex;
 
@@ -78,8 +81,9 @@ class Plateau {
     }
 
     createPlayerPions() {
-        for (let player of this.playersName) {
-            this.players.push(new Player(player,"red",500,this.plateauCases));
+        for (let i in this.playersName) {
+            let player = this.playersName[i]
+            this.players.push(new Player(player,"hsl("+Math.round(Math.random()*360)+",75%,60%)",500,this.plateauCases,[i,this.playersName.length - 1]));
         }
     }
 }
@@ -149,4 +153,4 @@ var game = new Plateau(plateauCases,document.getElementById('plateau'),["Solal",
 setInterval(function() {
 
 },1000);*/
-game.players[0].movePion(2);
+game.players[0].movePion(3);

@@ -7,9 +7,11 @@ Object.size = function(obj) {
 };
 
 class Player {
-    constructor(name,color,money,plateau) {
+    constructor(name,color,money,plateau,order) {
         this.name = name;
         this.color = color;
+        this.order = order[0];
+        this.max = order[1];
         this.money = money;
         this.card = [];
         this.plateau = plateau;
@@ -39,16 +41,30 @@ class Player {
         }
         this.pos = index;
         this.setPos();
-        this.popUp("Buy ?",this.test,"Yes",this.test2,"No");
+
+        let element = this.plateau[Object.keys(this.plateau)[this.pos]];
+
+        if (element.function == "sell") {
+            setTimeout(() => {
+                this.popUp("Buy ?",element.name,this.test,"Yes",this.test2,"No")
+            },1000);
+
+        }
+
+
     }
 
-    popUp(title,func1,name1,func2,name2) {
+    popUp(title,info,func1,name1,func2,name2) {
         let popUpElement = document.createElement("div");
         popUpElement.classList.add("popUp");
 
         let popUpTitle = document.createElement("p");
         popUpTitle.innerText = title;
         popUpElement.appendChild(popUpTitle);
+
+        let popUpInfo = document.createElement("p");
+        popUpInfo.innerText = info;
+        popUpElement.appendChild(popUpInfo);
 
         let buttonDiv = document.createElement("div");
 
@@ -81,7 +97,7 @@ class Player {
         let element = this.plateau[Object.keys(this.plateau)[this.pos]].element;
 
         this.pion.style.top = element.offsetTop + element.scrollHeight/2 - this.pion.scrollHeight/2 + "px";
-        this.pion.style.left = element.offsetLeft + element.scrollWidth/2 - this.pion.scrollWidth/2 + "px";
+        this.pion.style.left = ((this.max/2 - this.max)*25 + (25*this.order)) + element.offsetLeft + element.scrollWidth/2 - this.pion.scrollWidth/2 + "px";
 
     }
 }

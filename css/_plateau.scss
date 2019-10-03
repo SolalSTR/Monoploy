@@ -51,8 +51,25 @@
             transition: 1s;
             position: absolute;
             height: 50px;
-            width: 20px;
-            opacity: 0.5;
+            width: 26px;
+            border-radius: 50% 50% 30% 30%;
+            border: hsla(0, 0%, 0%, 0.54) solid 3px;
+
+            &:after {
+                content: "";
+                display: block;
+                position: absolute;
+                top: 20%;
+                right: 20%;
+                height: 25%;
+                width: 25%;
+                border-radius: 50%;
+                background: hsla(0, 0%, 100%, 0.8);
+            }
+
+            &:hover {
+                opacity: 0.4;
+            }
         }
 
         .case {
@@ -64,6 +81,11 @@
             border: solid rgb(44, 50, 44) 1px;
             font-size: 1.5rem;
             text-align: center;
+
+            &.corner {
+                justify-content: center;
+
+            }
 
             i {
                 align-self: center;
