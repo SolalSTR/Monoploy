@@ -2,9 +2,11 @@ class Plateau {
     constructor(cases,plateau,players) {
         this.plateau = plateau;
         this.plateauCases = cases;
+        this.caisse = 100;
 
         this.playersName = players;
         this.players = [];
+        this.playerTurn = 0;
         this.createPlateCase();
         this.createPlayerPions();
     }
@@ -81,11 +83,40 @@ class Plateau {
     }
 
     createPlayerPions() {
+        let header = document.querySelector("header");
+
         for (let i in this.playersName) {
             let player = this.playersName[i]
-            this.players.push(new Player(player,"hsl("+Math.round(Math.random()*360)+",75%,60%)",500,this.plateauCases,[i,this.playersName.length - 1]));
+            let counter = document.createElement("p");
+            counter.innerText = player;
+            header.appendChild(counter);
+
+            this.players.push(new Player(player,counter,"hsl("+Math.round(Math.random()*360)+",75%,60%)",500,[i,this.playersName.length - 1],this));
         }
+
+        this.turnHandeler();
     }
+
+    turnHandeler() {
+        if (this.playerTurn < 0) {
+            this.playerTurn += this.playersName.length;
+        }
+        if (this.playerTurn >= this.playersName.length) {
+            this.playerTurn -= this.playersName.length;
+        }
+
+        this.counterHandeler();
+        this.players[this.playerTurn].movePion(2);
+        this.playerTurn++;
+    }
+
+    counterHandeler = () => {
+        this.players.forEach(function(player) {
+            player.counter.innerText = player.name + " " + player.money;
+        });
+    }
+
+
 }
 
 
@@ -103,7 +134,7 @@ var plateauCases = {
         name: "Pompidou",
         prix: 10,
         color: "hsl(57, 75%, 50%)",
-        loyer: 5,
+        owner: null, loyer: 5,
         element: null
     },
     jail: {
@@ -117,7 +148,7 @@ var plateauCases = {
         name: "Part-Dieu",
         prix: 20,
         color: "hsl(0, 74%, 50%)",
-        loyer: 15,
+        owner: null, loyer: 15,
         element: null
     },
     parc: {
@@ -130,12 +161,12 @@ var plateauCases = {
         name: "Villeurbanne",
         prix: 100,
         color: "hsl(120, 74%, 50%)",
-        loyer: 175,
+        owner: null, loyer: 175,
         element: null
     },
     police: {
         function: "police",
-        name: "Go to prison",
+        name: "Go to Jail",
         element: null
     },
     lafayette: {
@@ -143,7 +174,7 @@ var plateauCases = {
         name: "Lafayette",
         prix: 500,
         color: "hsl(246, 74%, 50%)",
-        loyer: 600,
+        owner: null, loyer: 600,
         element: null
     }
 }
@@ -153,4 +184,4 @@ var game = new Plateau(plateauCases,document.getElementById('plateau'),["Solal",
 setInterval(function() {
 
 },1000);*/
-game.players[0].movePion(3);
+//game.players[0].movePion(3);

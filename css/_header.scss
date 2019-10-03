@@ -1,11 +1,11 @@
 //main: main.scss
 
 header {
-    background: red;
+    background: rgb(42, 42, 42);
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: $header-size;
-
+    color: #fff;
 }

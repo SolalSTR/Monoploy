@@ -7,15 +7,18 @@ Object.size = function(obj) {
 };
 
 class Player {
-    constructor(name,color,money,plateau,order) {
+    constructor(name,counter,color,money,order,game) {
         this.name = name;
         this.color = color;
         this.order = order[0];
         this.max = order[1];
         this.money = money;
-        this.card = [];
-        this.plateau = plateau;
+        this.cards = [];
+        this.plateau = game.plateauCases;
+        this.counter = counter;
+        this.game = game;
         this.pos = 0;
+        this.jailTime = 0;
 
         this.pion;
         this.createPion();
@@ -30,7 +33,7 @@ class Player {
         this.setPos();
     }
 
-    movePion(step) {
+    movePion(step,) {
         let index = this.pos + step;
         let platLength = Object.size(this.plateau);
         if (index < 0) {
@@ -39,17 +42,52 @@ class Player {
         if (index >= platLength) {
             index -= platLength;
         }
-        this.pos = index;
-        this.setPos();
+        if (this.jailTime == 0) {
+            this.pos = index;
+            this.setPos();
+        } else {
+            this.jailTime--;
+            console.log(this.name + " est en prison pour encore " + (this.jailTime + 1));
+        }
 
         let element = this.plateau[Object.keys(this.plateau)[this.pos]];
 
         if (element.function == "sell") {
             setTimeout(() => {
-                this.popUp("Buy ?",element.name,this.test,"Yes",this.test2,"No")
+                this.popUp("Acheter ?",element.name,this.buyCard,"Oui",this.endTurn,"Non")
             },1000);
+        } else if (element.function == "police") {
 
+            setTimeout(() => {
+                this.goToJail();
+            },1000);
+            console.log(this.name + " doit aller en prison.");
+        } else if (element.function == "owned") {
+            if (element.owner.name != this.name) {
+                setTimeout(() => {
+                    this.giveMoney();
+                },1000);
+            } else {
+                console.log(this.name + " est chez lui.");
+                this.endTurn();
+            }
+        } else if (element.function == "jail") {
+            setTimeout(() => {
+                this.endTurn();
+            },1000);
+        } else if (element.function == "parc") {
+            setTimeout(() => {
+                this.money += this.game.caisse;
+                console.log(this.name + " a récupéré " + this.game.caisse);
+                this.game.caisse = 0;
+                this.endTurn();
+            },1000);
+        } else {
+            setTimeout(() => {
+                this.endTurn();
+            },1000);
         }
+
 
 
     }
@@ -91,7 +129,40 @@ class Player {
     }
 
     test = () => {console.log('oui');}
-    test2 = () => {console.log('non');}
+    test2 = () => {
+        this.endTurn();
+    }
+
+    buyCard = () => {
+        let card = this.plateau[Object.keys(this.plateau)[this.pos]];
+
+        card.owner = this;
+        card.function = "owned";
+        this.money -= card.prix;
+        this.cards.push(card);
+
+        this.endTurn();
+    }
+
+    giveMoney = () => {
+        let card = this.plateau[Object.keys(this.plateau)[this.pos]];
+        this.money -= card.loyer;
+        this.game.players[card.owner.order].money += card.loyer;
+        this.endTurn();
+    }
+
+    goToJail = () => {
+        this.pos = Object.keys(this.plateau).indexOf("jail");
+        this.setPos();
+        setTimeout(() => {
+            this.jailTime = 3;
+            this.endTurn();
+        },1000);
+    }
+
+    endTurn = () => {
+        this.game.turnHandeler();
+    }
 
     setPos = () => {
         let element = this.plateau[Object.keys(this.plateau)[this.pos]].element;

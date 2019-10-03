@@ -23,7 +23,7 @@
         color: hsl(120, 4%, 23%);
 
         -webkit-transform: rotateX(-330deg);
-        transform: rotateX(20deg);
+        transform: rotateX(20deg) rotateZ(0deg);
 
         display: grid;
 
