@@ -2,7 +2,7 @@
 
 .plateau {
     height: 100%;
-
+    width: 100%;
     background:
     radial-gradient(#0c0d0c, transparent), repeating-linear-gradient(
       -45deg,
@@ -26,6 +26,7 @@
         -webkit-transform: rotateX(-330deg);
         transform: rotateX(20deg) rotateZ(0deg);
         grid-gap: 10px;
+        border: 10px solid #bdbdbd;
         display: grid;
 
         .pion {
@@ -35,6 +36,8 @@
             width: 40px;
             border-radius: 50% 50% 30% 30%;
             border: hsla(0, 0%, 0%, 0.54) solid 3px;
+            display: flex;
+            justify-content: center;
 
             &:after {
                 content: "";
@@ -54,12 +57,7 @@
 
             }
 
-            p:hover {
-                opacity: 1;
-            }
-
             p {
-                opacity: 0.4;
                 position: absolute;
                 text-align: center;
                 top: -80%;
@@ -135,6 +133,16 @@
             font-size: 2rem;
             font-weight: 600;
 
+            &:last-child {
+                background: #ee4848;
+                border-bottom: #ba1212 5px solid;
+
+                &:active {
+                    border-top: #fff 5px solid;
+                    border-bottom: #ee4848 5px solid;
+                }
+            }
+
             &:first-child {
                 background: #7ded45;
                 border-bottom: #4aba12 5px solid;
@@ -145,15 +153,7 @@
                 }
             }
 
-            &:last-child {
-                background: #ee4848;
-                border-bottom: #ba1212 5px solid;
 
-                &:active {
-                    border-top: #fff 5px solid;
-                    border-bottom: #ee4848 5px solid;
-                }
-            }
         }
     }
 }

@@ -23,6 +23,7 @@ class Plateau {
             let card = this.plateauCases[cases];
 
             let cardElement = document.createElement("div");
+            cardElement.style.border = card.color + " solid 5px";
 
             if (card.function == "start") {
                 let iconElemnt = document.createElement("i");
@@ -93,7 +94,7 @@ class Plateau {
             counter.innerText = player;
             header.appendChild(counter);
 
-            this.players.push(new Player(player,counter,"hsl("+Math.round(Math.random()*360)+",75%,60%)",500,[i,this.playersName.length - 1],this));
+            this.players.push(new Player(player,counter,"hsl("+(360/this.playersName.length*i)+",70%,60%)",500,[i,this.playersName.length - 1],this));
         }
 
         this.diceRoll(1,2,2);
@@ -106,7 +107,7 @@ class Plateau {
         }
         this.nextMove = movement;
         this.counterHandeler();
-        this.popUp("Jetez les dés !",this.players[this.playerTurn].name,this.turnHandeler,"Roll")
+        this.popUp("Jetez les dés !",this.players[this.playerTurn].name,this.turnHandeler,"Jetez")
     }
 
     popUp(title,info,func1,name1) {
@@ -151,7 +152,7 @@ class Plateau {
 
     counterHandeler = () => {
         this.players.forEach(function(player) {
-            player.counter.innerText = player.name + " " + player.money;
+            player.counter.innerText = player.name + ": " + player.money;
         });
     }
 
@@ -172,7 +173,7 @@ var plateauCases = {
         function: "sell",
         name: "Rue 1",
         prix: 10,
-        color: "hsl(57, 75%, 50%)",
+        color: "hsl(117, 69%, 60%)",
         owner: null, loyer: 5,
         element: null
     },
@@ -180,7 +181,7 @@ var plateauCases = {
         function: "sell",
         name: "Rue 2",
         prix: 15,
-        color: "hsl(57, 75%, 50%)",
+        color: "hsl(117, 70%, 60%)",
         owner: null, loyer: 7,
         element: null
     },
@@ -188,7 +189,7 @@ var plateauCases = {
         function: "sell",
         name: "Rue 3",
         prix: 20,
-        color: "hsl(57, 75%, 50%)",
+        color: "hsl(117, 70%, 60%)",
         owner: null, loyer: 13,
         element: null
     },
@@ -202,7 +203,7 @@ var plateauCases = {
         function: "sell",
         name: "Rue 4",
         prix: 26,
-        color: "hsl(57, 75%, 50%)",
+        color: "hsl(0, 69%, 60%)",
         owner: null, loyer: 14,
         element: null
     },
@@ -210,7 +211,7 @@ var plateauCases = {
         function: "sell",
         name: "Rue 5",
         prix: 30,
-        color: "hsl(57, 75%, 50%)",
+        color: "hsl(0, 70%, 60%)",
         owner: null, loyer: 21,
         element: null
     },
@@ -218,7 +219,7 @@ var plateauCases = {
         function: "sell",
         name: "Rue 6",
         prix: 32,
-        color: "hsl(57, 75%, 50%)",
+        color: "hsl(0, 70%, 60%)",
         owner: null, loyer: 27,
         element: null
     },
@@ -231,7 +232,7 @@ var plateauCases = {
         function: "sell",
         name: "Rue 7",
         prix: 40,
-        color: "hsl(57, 75%, 50%)",
+        color: "hsl(55, 69%, 60%)",
         owner: null, loyer: 35,
         element: null
     },
@@ -239,7 +240,7 @@ var plateauCases = {
         function: "sell",
         name: "Rue 8",
         prix: 42,
-        color: "hsl(57, 75%, 50%)",
+        color: "hsl(55, 70%, 60%)",
         owner: null, loyer: 36,
         element: null
     },
@@ -247,7 +248,7 @@ var plateauCases = {
         function: "sell",
         name: "Rue 9",
         prix: 45,
-        color: "hsl(57, 75%, 50%)",
+        color: "hsl(55, 70%, 60%)",
         owner: null, loyer: 39,
         element: null
     },
@@ -260,7 +261,7 @@ var plateauCases = {
         function: "sell",
         name: "Rue 10",
         prix: 50,
-        color: "hsl(243, 75%, 50%)",
+        color: "hsl(243, 70%, 60%)",
         owner: null, loyer: 40,
         element: null
     },
@@ -268,7 +269,7 @@ var plateauCases = {
         function: "sell",
         name: "Rue 10",
         prix: 60,
-        color: "hsl(243, 75%, 50%)",
+        color: "hsl(243, 70%, 60%)",
         owner: null, loyer: 50,
         element: null
     },
@@ -276,13 +277,13 @@ var plateauCases = {
         function: "sell",
         name: "Rue 10",
         prix: 80,
-        color: "hsl(243, 74%, 50%)",
+        color: "hsl(243, 70%, 60%)",
         owner: null, loyer: 70,
         element: null
     },
 }
 
-var game = new Plateau(plateauCases,document.getElementById('plateau'),["Solal","sOLAL","simon"]);
+var game = new Plateau(plateauCases,document.getElementById('plateau'),["Joueur 1","Joueur 2","Joueur 3"]);
 /*
 setInterval(function() {
 

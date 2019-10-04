@@ -148,8 +148,7 @@ class Player {
         card.function = "owned";
         this.money -= card.prix;
         this.cards.push(card);
-        card.element.style.borderColor = this.color;
-        card.element.style.borderSize = 4;
+        card.element.style.border = this.color + " 5px double";
 
         this.endTurn();
     }
