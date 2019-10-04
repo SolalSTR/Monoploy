@@ -7,15 +7,17 @@ class Plateau {
         this.playersName = players;
         this.players = [];
         this.playerTurn = 0;
+        this.movement = 0;
         this.createPlateCase();
         this.createPlayerPions();
     }
 
     createPlateCase() {
-        this.plateau.style.gridTemplate = "repeat(3,1fr) / repeat(3,1fr)";
+        let platLength = Object.keys(this.plateauCases).length;
+        this.plateau.style.gridTemplate = "repeat("+(platLength/4+1)+",1fr) / repeat("+(platLength/4+1)+",1fr)";
         let cardIndex = 0;
-        let x = 3;
-        let y = 3;
+        let x = (platLength/4+1);
+        let y = (platLength/4+1);
         for (let cases of Object.keys(this.plateauCases)) {
 
             let card = this.plateauCases[cases];
@@ -60,17 +62,17 @@ class Plateau {
                 cardElement.classList.add("corner");
             }
 
-            let platLength = this.plateauCases.length;
+
             cardElement.style.order = cardIndex;
 
             cardElement.style.gridColumn = x + " / span 1";
             cardElement.style.gridRow = y + " / span 1";
             cardIndex++;
-            if (cardIndex >= 7) {
+            if (cardIndex >= platLength-(platLength/4-1)) {
                 y++;
-            } else if (cardIndex >= 5) {
+            } else if (cardIndex >= platLength/2+1) {
                 x++;
-            } else if (cardIndex >= 3) {
+            } else if (cardIndex >= platLength/4+1) {
                 y--;
             } else {
                 x--;
@@ -94,7 +96,17 @@ class Plateau {
             this.players.push(new Player(player,counter,"hsl("+Math.round(Math.random()*360)+",75%,60%)",500,[i,this.playersName.length - 1],this));
         }
 
-        this.turnHandeler();
+        this.diceRoll(1,2,2);
+    }
+
+    diceRoll(min,max,times) {
+        let movement = min * times;
+        for (var i = 0; i < times; i++) {
+            movement += Math.floor(Math.random() * max);
+        }
+        this.nextMove = movement;
+        this.counterHandeler();
+        this.popUp("Jetez les dés !",this.players[this.playerTurn].name,this.turnHandeler,"Roll")
     }
 
     popUp(title,info,func1,name1) {
@@ -125,17 +137,16 @@ class Plateau {
 
     }
 
-    turnHandeler() {
+    turnHandeler = () => {
+        this.players[this.playerTurn].movePion(this.nextMove);
+        this.playerTurn++;
+
         if (this.playerTurn < 0) {
             this.playerTurn += this.playersName.length;
         }
         if (this.playerTurn >= this.playersName.length) {
             this.playerTurn -= this.playersName.length;
         }
-
-        this.counterHandeler();
-        this.players[this.playerTurn].movePion(Math.floor(Math.random() * 4) +1);
-        this.playerTurn++;
     }
 
     counterHandeler = () => {
@@ -157,12 +168,28 @@ var plateauCases = {
         prix: 200,
         element: null
     },
-    pompidou: {
+    rue1: {
         function: "sell",
-        name: "Pompidou",
+        name: "Rue 1",
         prix: 10,
         color: "hsl(57, 75%, 50%)",
         owner: null, loyer: 5,
+        element: null
+    },
+    rue2: {
+        function: "sell",
+        name: "Rue 2",
+        prix: 15,
+        color: "hsl(57, 75%, 50%)",
+        owner: null, loyer: 7,
+        element: null
+    },
+    rue3: {
+        function: "sell",
+        name: "Rue 3",
+        prix: 20,
+        color: "hsl(57, 75%, 50%)",
+        owner: null, loyer: 13,
         element: null
     },
     jail: {
@@ -171,12 +198,28 @@ var plateauCases = {
         waitTime: 3,
         element: null
     },
-    partDieu: {
+    rue4: {
         function: "sell",
-        name: "Part-Dieu",
-        prix: 20,
-        color: "hsl(0, 74%, 50%)",
-        owner: null, loyer: 15,
+        name: "Rue 4",
+        prix: 26,
+        color: "hsl(57, 75%, 50%)",
+        owner: null, loyer: 14,
+        element: null
+    },
+    rue5: {
+        function: "sell",
+        name: "Rue 5",
+        prix: 30,
+        color: "hsl(57, 75%, 50%)",
+        owner: null, loyer: 21,
+        element: null
+    },
+    rue6: {
+        function: "sell",
+        name: "Rue 6",
+        prix: 32,
+        color: "hsl(57, 75%, 50%)",
+        owner: null, loyer: 27,
         element: null
     },
     parc: {
@@ -184,12 +227,28 @@ var plateauCases = {
         name: "Free Parc",
         element: null
     },
-    villeurbanne: {
+    rue7: {
         function: "sell",
-        name: "Villeurbanne",
-        prix: 100,
-        color: "hsl(120, 74%, 50%)",
-        owner: null, loyer: 175,
+        name: "Rue 7",
+        prix: 40,
+        color: "hsl(57, 75%, 50%)",
+        owner: null, loyer: 35,
+        element: null
+    },
+    rue8: {
+        function: "sell",
+        name: "Rue 8",
+        prix: 42,
+        color: "hsl(57, 75%, 50%)",
+        owner: null, loyer: 36,
+        element: null
+    },
+    rue9: {
+        function: "sell",
+        name: "Rue 9",
+        prix: 45,
+        color: "hsl(57, 75%, 50%)",
+        owner: null, loyer: 39,
         element: null
     },
     police: {
@@ -197,14 +256,30 @@ var plateauCases = {
         name: "Go to Jail",
         element: null
     },
-    lafayette: {
+    rue10: {
         function: "sell",
-        name: "Lafayette",
-        prix: 500,
-        color: "hsl(246, 74%, 50%)",
-        owner: null, loyer: 600,
+        name: "Rue 10",
+        prix: 50,
+        color: "hsl(243, 75%, 50%)",
+        owner: null, loyer: 40,
         element: null
-    }
+    },
+    rue11: {
+        function: "sell",
+        name: "Rue 10",
+        prix: 60,
+        color: "hsl(243, 75%, 50%)",
+        owner: null, loyer: 50,
+        element: null
+    },
+    rue12: {
+        function: "sell",
+        name: "Rue 10",
+        prix: 80,
+        color: "hsl(243, 74%, 50%)",
+        owner: null, loyer: 70,
+        element: null
+    },
 }
 
 var game = new Plateau(plateauCases,document.getElementById('plateau'),["Solal","sOLAL","simon"]);

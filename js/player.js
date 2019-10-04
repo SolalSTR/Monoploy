@@ -28,6 +28,11 @@ class Player {
         let pion = document.createElement("div");
         pion.classList.add("pion");
         pion.style.background = this.color;
+
+        let playerName = document.createElement("p");
+        playerName.innerText = this.name;
+        pion.appendChild(playerName);
+
         this.pion = pion;
         document.getElementById('plateau').appendChild(this.pion);
         this.setPos();
@@ -40,7 +45,15 @@ class Player {
             index += platLength;
         }
         if (index >= platLength) {
+            if (index == platLength) {
+                this.money += this.plateau.start.prix * 2;
+                console.log(this.name + " a récupéré " + this.plateau.start.prix * 2);
+            } else {
+                this.money += this.plateau.start.prix;
+                console.log(this.name + " est passé par la case départ " + this.plateau.start.prix);
+            }
             index -= platLength;
+
         }
         if (this.jailTime == 0) {
             this.pos = index;
@@ -128,11 +141,6 @@ class Player {
 
     }
 
-    test = () => {console.log('oui');}
-    test2 = () => {
-        this.endTurn();
-    }
-
     buyCard = () => {
         let card = this.plateau[Object.keys(this.plateau)[this.pos]];
 
@@ -140,6 +148,8 @@ class Player {
         card.function = "owned";
         this.money -= card.prix;
         this.cards.push(card);
+        card.element.style.borderColor = this.color;
+        card.element.style.borderSize = 4;
 
         this.endTurn();
     }
@@ -161,7 +171,7 @@ class Player {
     }
 
     endTurn = () => {
-        this.game.turnHandeler();
+        this.game.diceRoll(1,2,2);
     }
 
     setPos = () => {
